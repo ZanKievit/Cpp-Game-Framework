@@ -78,6 +78,30 @@ int Renderer::init()
     return 0;
 }
 
+void Renderer::renderGameobject(Gameobject* gameobject)
+{
+    // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
+    computeMatricesFromInputs(_window);
+    
+    glm::vec3 cursor = getCursor();
+    //printf("(%f,%f)\n",cursor.x, cursor.y);
+    
+    glm::mat4 ViewMatrix = getViewMatrix(); // get from Camera (Camera position and direction)
+    glm::mat4 ModelMatrix = glm::mat4(1.0f);
+    
+    // Use our shader
+    glUseProgram(programID);
+    
+    // Build the Model matrix
+    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( 500, 0, 0.0f));
+    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, 0 / 360 * 6.28f);
+    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(1, 1, 0.0f));
+    
+    ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+    
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+}
+
 void Renderer::renderSprite(Sprite* sprite)
 {
     // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
@@ -93,9 +117,9 @@ void Renderer::renderSprite(Sprite* sprite)
     glUseProgram(programID);
     
     // Build the Model matrix
-    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( sprite->getPosX(), sprite->getPosY(), 0.0f));
-    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, sprite->getRotationZ() / 360 * 6.28f);
-    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(sprite->getScaleX(), sprite->getScaleY(), 0.0f));
+    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( 0, 0, 0.0f));
+    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, 0 / 360 * 6.28f);
+    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(1, 1, 0.0f));
     
     ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
     
@@ -143,3 +167,4 @@ void Renderer::renderSprite(Sprite* sprite)
     glDisableVertexAttribArray(vertexPosition_modelspaceID);
     glDisableVertexAttribArray(vertexUVID);
 }
+

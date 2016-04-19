@@ -31,30 +31,11 @@ public:
     GLuint vertexbuffer() { return _vertexbuffer; };
     GLuint uvbuffer() { return _uvbuffer; };
     
-    float getPosX() { return position_x; };
-    float getPosY() { return position_y; };
-    float getRotationZ() { return rotation_z; };
-    
-    void setPosX(float posX){ position_x = posX; };
-    void setPosY(float posY){ position_y = posY; };
-    
-    void setRotationZ(float rotZ){ rotation_z = rotZ; };
-    
-    float getScaleX() { return scale_x; };
-    float getScaleY() { return scale_y; };
-    void setScaleX(float sclX){ scale_x = sclX; };
-    void setScaleY(float sclY){ scale_y = sclY; };
-    
 private:
+    
     GLuint _texture;
     GLuint _vertexbuffer;
     GLuint _uvbuffer;
-    
-    float position_x;
-    float position_y;
-    float rotation_z;
-    float scale_x;
-    float scale_y;
 };
 
 #endif /* SPRITE_H */

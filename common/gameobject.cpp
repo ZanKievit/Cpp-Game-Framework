@@ -1,17 +1,14 @@
 #include "gameobject.h"
 
-#include <common/renderer.h>
-#include <common/sprite.h>
-
-gameobject::gameobject(){
+Gameobject::Gameobject(){
    
 }
 
-gameobject::~gameobject(){
+Gameobject::~Gameobject(){
     deleteSprite();
 }
 
-void gameobject::addSprite(Sprite* spr)
+void Gameobject::addSprite(Sprite* spr)
 {
     deleteSprite();
     _sprite = new Sprite();

@@ -21,15 +21,18 @@
 #include <common/sprite.h>
 #include <common/texture.h>
 #include <common/camera.h>
+#include <common/gameobject.h>
 
 class Renderer
 {
     public:
-        Renderer(); ///< @brief Constructor of the Renderer
-        virtual ~Renderer(); ///< @brief Destructor of the Renderer
-        
-        void renderSprite(Sprite* sprite);
+        Renderer();
+        virtual ~Renderer();
+    
         GLFWwindow* window() { return _window; };
+    
+        void renderGameobject(Gameobject* gameobject);
+        void renderSprite(Sprite* sprite);
     
     private:
         int init();
@@ -46,7 +49,7 @@ class Renderer
         GLuint vertexUVID;
         GLuint matrixID;
         GLuint textureID;
-        
+    
         glm::mat4 ProjectionMatrix;
 };
 
