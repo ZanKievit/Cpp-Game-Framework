@@ -19,13 +19,18 @@ int main( void )
     Sprite* sprite1 = new Sprite();
     Gameobject* object1 = new Gameobject();
     
+    sprite1->loadTexture("assets/island.bmp");
+    object1->addSprite(sprite1);
+    object1->posx = 650;
+    object1->posy = 300;
+    object1->scalex = 0.8;
+    object1->scaley = 0.8;
+    object1->rotation = 45;
+    
     do {
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        sprite1->loadTexture("assets/test.bmp");
-        renderer.renderSprite(sprite1);
-        object1->addSprite(sprite1);
         renderer.renderGameobject(object1);
         
         // Swap buffers
