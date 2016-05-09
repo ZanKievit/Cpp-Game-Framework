@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <vector>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -32,10 +33,12 @@ class Renderer
         GLFWwindow* window() { return _window; };
     
         void renderGameobject(Gameobject* gameobject);
-        void renderSprite(Sprite* sprite);
+        void renderSprite(const glm::mat4& modelMatrix, Sprite* sprite);
     
     private:
         int init();
+    
+        glm::mat4 _getModelMatrix(Gameobject* gameobject);
         
         GLFWwindow* _window;
         int window_width;

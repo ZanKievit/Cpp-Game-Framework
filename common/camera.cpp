@@ -18,7 +18,7 @@ glm::mat4 getViewMatrix(){
 	return ViewMatrix;
 }
 
-glm::vec3 getCursor(){
+glm::vec3 getursor(){
 	return cursor;
 }
 

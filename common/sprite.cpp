@@ -17,12 +17,12 @@ Sprite::Sprite()
     
     // Two UV coordinates for each vertex.
     GLfloat g_uv_buffer_data[] = {
-        1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        0.0f, 1.0f,
         1.0f, 1.0f,
-        1.0f, 0.0f
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f
     };
     
     glGenBuffers(1, &_vertexbuffer);

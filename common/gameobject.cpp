@@ -1,7 +1,11 @@
 #include "gameobject.h"
 
 Gameobject::Gameobject(){
-   
+    posx = 0;
+    posy = 0;
+    rotation = 0;
+    scalex = 1;
+    scaley = 1;
 }
 
 Gameobject::~Gameobject(){

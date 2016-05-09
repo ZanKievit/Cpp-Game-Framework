@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -24,19 +25,31 @@ public:
     Gameobject();
     virtual ~Gameobject();
     
-    float positionx;
-    float positiony;
+    float posx;
+    float posy;
     float rotation;
     float scalex;
     float scaley;
     
-    Sprite* sprite() { return _sprite; };
-    
     void addSprite(Sprite* spr);
     
-private:
+    void addChild(Gameobject* child);
+    void removeChild(Gameobject* child);
     
+    Sprite* sprite() { return _sprite; };
+    Gameobject* parent() { return _parent; };
+    
+    float worldPosX() { return _worldPosX; };
+    float worldPosY() { return _worldPosY; };
+    void setWorldPosX(float value){_worldPosX = value;};
+    void setWorldPosY(float value){_worldPosY = value;};
+    
+private:
     Sprite* _sprite;
+    Gameobject* _parent;
+    
+    float _worldPosX;
+    float _worldPosY;
     
     void deleteSprite() {
         if (_sprite != NULL) {

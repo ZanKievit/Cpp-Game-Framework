@@ -80,50 +80,46 @@ int Renderer::init()
 
 void Renderer::renderGameobject(Gameobject* gameobject)
 {
-    // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
-    computeMatricesFromInputs(_window);
+    glm::vec4 realpos = _getModelMatrix(gameobject) * glm::vec4(0,0,0,1);
+    gameobject->setWorldPosX(realpos.x);
+    gameobject->setWorldPosY(realpos.y);
     
-    glm::vec3 cursor = getCursor();
-    //printf("(%f,%f)\n",cursor.x, cursor.y);
-    
-    glm::mat4 ViewMatrix = getViewMatrix(); // get from Camera (Camera position and direction)
-    glm::mat4 ModelMatrix = glm::mat4(1.0f);
-    
-    // Use our shader
-    glUseProgram(programID);
-    
-    // Build the Model matrix
-    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( 500, 0, 0.0f));
-    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, 0 / 360 * 6.28f);
-    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(1, 1, 0.0f));
-    
-    ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-    
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    Sprite* sprite = gameobject->sprite();
+    if (sprite != NULL) {
+        renderSprite(_getModelMatrix(gameobject), gameobject->sprite());
+    }
 }
 
-void Renderer::renderSprite(Sprite* sprite)
+glm::mat4 Renderer::_getModelMatrix(Gameobject* gameobject)
+{
+    glm::vec3 position = glm::vec3(gameobject->posx, gameobject->posy, 0.0f);
+    glm::vec3 rotation = glm::vec3(0.0f, 0.0f, gameobject->rotation);
+    glm::vec3 scale = glm::vec3(gameobject->scalex, gameobject->scaley, 1.0f);
+    
+    // Build the Model matrix
+    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
+    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z / 360 * 6.28f);
+    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
+    
+    glm::mat4 ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+    
+    return ModelMatrix;
+}
+
+void Renderer::renderSprite(const glm::mat4& modelMatrix, Sprite* sprite)
 {
     // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
     computeMatricesFromInputs(_window);
     
-    glm::vec3 cursor = getCursor();
+    //glm::vec3 cursor = getCursor();
     //printf("(%f,%f)\n",cursor.x, cursor.y);
     
     glm::mat4 ViewMatrix = getViewMatrix(); // get from Camera (Camera position and direction)
-    glm::mat4 ModelMatrix = glm::mat4(1.0f);
     
     // Use our shader
     glUseProgram(programID);
     
-    // Build the Model matrix
-    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( 0, 0, 0.0f));
-    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, 0 / 360 * 6.28f);
-    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(1, 1, 0.0f));
-    
-    ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-    
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * modelMatrix;
     
     // Send our transformation to the currently bound shader,
     // in the "MVP" uniform
