@@ -1,31 +1,19 @@
-// Include GLFW
-#include <glfw3.h>
-
-// Include GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
-
 #include "camera.h"
 
-glm::mat4 ViewMatrix;
-
-// Initial position : on +Z
-glm::vec3 position = glm::vec3( 0, 0, 5 ); 
-glm::vec3 cursor = glm::vec3( 0, 0, 0 ); 
-
-glm::mat4 getViewMatrix(){
-	return ViewMatrix;
+Camera::Camera()
+{
+    // Initial position : on +Z
+    position = glm::vec3( 0, 0, 5 );
+    cursor = glm::vec3( 0, 0, 0 );
+    
+    speed = 300.0f; // 300 units / second
 }
 
-glm::vec3 getCursor(){
-	return cursor;
+Camera::~Camera(){
+    
 }
 
-float speed = 300.0f; // 300 units / second
-
-
-void computeMatricesFromInputs(GLFWwindow* window)
+void Camera::computeMatricesFromInputs(GLFWwindow* window)
 {
 	// glfwGetTime is called only once, the first time this function is called
 	static double lastTime = glfwGetTime();
@@ -37,12 +25,12 @@ void computeMatricesFromInputs(GLFWwindow* window)
 	// Get mouse position
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
-	cursor = glm::vec3( xpos, ypos, 0 ); 
-	
+	cursor = glm::vec3( xpos, ypos, 0 );
+
 	// Right and Down vector
 	glm::vec3 right = glm::vec3(1, 0, 0);
 	glm::vec3 up = glm::vec3(0, -1, 0);
-	
+
 	// Move up
 	if (glfwGetKey( window, GLFW_KEY_UP ) == GLFW_PRESS){
 		position += up * deltaTime * speed;

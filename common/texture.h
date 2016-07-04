@@ -1,3 +1,13 @@
+/**
+ * @file texture.h
+ *
+ * @brief The Texture header file.
+ *
+ * This file is part of Framework_Zan, a 2D OpenGL framework.
+ *
+ * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
+ *   - Initial commit
+ */
 #ifndef TEXTURE_H
 #define TEXTURE_H
 

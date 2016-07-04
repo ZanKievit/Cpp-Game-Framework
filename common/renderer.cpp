@@ -78,52 +78,73 @@ int Renderer::init()
     return 0;
 }
 
-void Renderer::renderGameobject(Gameobject* gameobject)
+void Renderer::renderScene(Scene* scene)
 {
-    // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
-    computeMatricesFromInputs(_window);
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    _viewMatrix = scene->camera()->getViewMatrix();
+    _projectionMatrix = scene->camera()->getProjectionMatrix();
     
-    glm::vec3 cursor = getCursor();
-    //printf("(%f,%f)\n",cursor.x, cursor.y);
+    // 'root' scene node has identity Matrix
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
     
-    glm::mat4 ViewMatrix = getViewMatrix(); // get from Camera (Camera position and direction)
-    glm::mat4 ModelMatrix = glm::mat4(1.0f);
+    this->renderGameobject(modelMatrix, scene, scene->camera());
     
-    // Use our shader
-    glUseProgram(programID);
-    
-    // Build the Model matrix
-    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( 500, 0, 0.0f));
-    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, 0 / 360 * 6.28f);
-    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(1, 1, 0.0f));
-    
-    ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-    
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    // Swap buffers
+    glfwSwapBuffers(_window);
+    glfwPollEvents();
 }
 
-void Renderer::renderSprite(Sprite* sprite)
+void Renderer::renderGameobject(const glm::mat4& modelMatrix, Gameobject* gameobject, Camera* camera)
+{
+    glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
+    gameobject->setWorldPosX(realpos.x);
+    gameobject->setWorldPosY(realpos.y);
+    
+    Sprite* sprite = gameobject->sprite();
+    if (sprite != NULL) {
+        renderSprite(modelMatrix, gameobject->sprite(), camera);
+    }
+    
+    // Render all Children
+    std::vector<Gameobject*> children = gameobject->children();
+    for (int child = 0; child < children.capacity(); child++) {
+        // Transform child's children...
+        this->renderGameobject(_getModelMatrix(children.at(child)), children.at(child), camera);
+    }
+}
+
+glm::mat4 Renderer::_getModelMatrix(Gameobject* gameobject)
+{
+    glm::vec3 position = glm::vec3(gameobject->posx, gameobject->posy, 0.0f);
+    glm::vec3 rotation = glm::vec3(0.0f, 0.0f, gameobject->rotation);
+    glm::vec3 scale = glm::vec3(gameobject->scalex, gameobject->scaley, 1.0f);
+    
+    // Build the Model matrix
+    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
+    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z / 360 * 6.28f);
+    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
+    
+    glm::mat4 ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+    
+    return ModelMatrix;
+}
+
+void Renderer::renderSprite(const glm::mat4& modelMatrix, Sprite* sprite, Camera* camera)
 {
     // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
-    computeMatricesFromInputs(_window);
+    camera->computeMatricesFromInputs(_window);
     
-    glm::vec3 cursor = getCursor();
+    //glm::vec3 cursor = getCursor();
     //printf("(%f,%f)\n",cursor.x, cursor.y);
     
-    glm::mat4 ViewMatrix = getViewMatrix(); // get from Camera (Camera position and direction)
-    glm::mat4 ModelMatrix = glm::mat4(1.0f);
+    glm::mat4 ViewMatrix = camera->getViewMatrix(); // get from Camera (Camera position and direction)
     
     // Use our shader
     glUseProgram(programID);
     
-    // Build the Model matrix
-    glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), glm::vec3( 0, 0, 0.0f));
-    glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, 0 / 360 * 6.28f);
-    glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), glm::vec3(1, 1, 0.0f));
-    
-    ModelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-    
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * modelMatrix;
     
     // Send our transformation to the currently bound shader,
     // in the "MVP" uniform
