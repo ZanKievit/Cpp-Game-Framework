@@ -11,7 +11,6 @@
 
 #include <common/renderer.h>
 #include <common/camera.h>
-#include <common/print.h>
 #include <common/scene.h>
 
 #include <common/sprite.h>

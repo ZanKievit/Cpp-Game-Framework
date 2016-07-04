@@ -41,7 +41,6 @@ private:
     bool _isGrounded; ///< @brief The _isGrounded of the Player
     bool jump; ///< @brief The jump of the Player
     int jumpAmount; ///< @brief The jumpAmount of the Player
-    float time; ///< @brief The time of the Player
     
     GLFWwindow* _window; ///< @brief The GLFWwindow of the Player
 };

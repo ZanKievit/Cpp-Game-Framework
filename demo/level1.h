@@ -13,8 +13,6 @@
 #include <stdio.h>
 
 #include <common/scene.h>
-#include <common/print.h>
-
 #include "player.h"
 
 /// @brief The Level1 class is a Scene that contains objects.

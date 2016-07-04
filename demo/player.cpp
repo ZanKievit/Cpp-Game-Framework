@@ -11,7 +11,7 @@ Player::~Player(){
 void Player::move()
 {
     float speed = 150.0f;
-    float jumpForce = -3000;
+    float jumpForce = -8000;
     float gravity = 100;
     static double lastTime = glfwGetTime();
     double currentTime = glfwGetTime();

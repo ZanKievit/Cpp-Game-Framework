@@ -70,6 +70,8 @@ add_executable(demo
     common/sprite.cpp
 	common/gameobject.cpp
 	common/gameobject.h
+	common/scene.cpp
+	common/scene.h
 )
 target_link_libraries(demo
 	${ALL_LIBS}

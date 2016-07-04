@@ -36,7 +36,6 @@
 #include <common/texture.h>
 #include <common/camera.h>
 #include <common/scene.h>
-#include <common/print.h>
 
 /// @brief The Renderer class renders meshes (vertices, normals, UV coordinates) from Sprites.
 class Renderer
