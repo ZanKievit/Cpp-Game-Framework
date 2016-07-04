@@ -78,15 +78,40 @@ int Renderer::init()
     return 0;
 }
 
-void Renderer::renderGameobject(Gameobject* gameobject)
+void Renderer::renderScene(Scene* scene)
 {
-    glm::vec4 realpos = _getModelMatrix(gameobject) * glm::vec4(0,0,0,1);
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    _viewMatrix = scene->camera()->getViewMatrix();
+    _projectionMatrix = scene->camera()->getProjectionMatrix();
+    
+    // 'root' scene node has identity Matrix
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    
+    this->renderGameobject(modelMatrix, scene, scene->camera());
+    
+    // Swap buffers
+    glfwSwapBuffers(_window);
+    glfwPollEvents();
+}
+
+void Renderer::renderGameobject(const glm::mat4& modelMatrix, Gameobject* gameobject, Camera* camera)
+{
+    glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
     gameobject->setWorldPosX(realpos.x);
     gameobject->setWorldPosY(realpos.y);
     
     Sprite* sprite = gameobject->sprite();
     if (sprite != NULL) {
-        renderSprite(_getModelMatrix(gameobject), gameobject->sprite());
+        renderSprite(modelMatrix, gameobject->sprite(), camera);
+    }
+    
+    // Render all Children
+    std::vector<Gameobject*> children = gameobject->children();
+    for (int child = 0; child < children.capacity(); child++) {
+        // Transform child's children...
+        this->renderGameobject(_getModelMatrix(children.at(child)), children.at(child), camera);
     }
 }
 
@@ -106,15 +131,15 @@ glm::mat4 Renderer::_getModelMatrix(Gameobject* gameobject)
     return ModelMatrix;
 }
 
-void Renderer::renderSprite(const glm::mat4& modelMatrix, Sprite* sprite)
+void Renderer::renderSprite(const glm::mat4& modelMatrix, Sprite* sprite, Camera* camera)
 {
     // Compute the ViewMatrix from keyboard and mouse input (see: camera.h/cpp)
-    computeMatricesFromInputs(_window);
+    camera->computeMatricesFromInputs(_window);
     
     //glm::vec3 cursor = getCursor();
     //printf("(%f,%f)\n",cursor.x, cursor.y);
     
-    glm::mat4 ViewMatrix = getViewMatrix(); // get from Camera (Camera position and direction)
+    glm::mat4 ViewMatrix = camera->getViewMatrix(); // get from Camera (Camera position and direction)
     
     // Use our shader
     glUseProgram(programID);
