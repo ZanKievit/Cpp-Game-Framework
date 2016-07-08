@@ -26,12 +26,22 @@ public:
     void move();
     /// @brief checks if Player _isGrounded.
     /// @return _isGrounded
-    bool isGrounded(){return _isGrounded;}
+    //bool isGrounded(){return _isGrounded;}
     
     /// @brief set _isGrounded true.
     void isOnGround(){_isGrounded = true;}
     /// @brief set _isGrounded false.
     void isOffGround(){_isGrounded = false;}
+    
+    /// @brief set _isLeftsideCol true.
+    void isColLeft(){_isLeftsideCol = true;}
+    /// @brief set _isLeftsideCol false.
+    void isNotColLeft(){_isLeftsideCol = false;}
+    
+    /// @brief set _isRightsideCol true.
+    void isColRight(){_isRightsideCol = true;}
+    /// @brief set _isRightsideCol false.
+    void isNotColRight(){_isRightsideCol = false;}
     
     /// @brief sets the GLFWwindow of Player.
     /// @param window The new GLFWwindow of window
@@ -39,8 +49,12 @@ public:
     
 private:
     bool _isGrounded; ///< @brief The _isGrounded of the Player
+    bool _isLeftsideCol; ///< @brief The _isGrounded of the Player
+    bool _isRightsideCol; ///< @brief The _isGrounded of the Player
     bool jump; ///< @brief The jump of the Player
     int jumpAmount; ///< @brief The jumpAmount of the Player
+    glm::vec2 velocity; ///< @brief The velocity of the Player
+    glm::vec2 maxVelocity; ///< @brief The maximum velocity of the Player
     
     GLFWwindow* _window; ///< @brief The GLFWwindow of the Player
 };

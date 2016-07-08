@@ -44,6 +44,7 @@ private:
     Gameobject* _ground5 = new Gameobject(); ///< @brief The _ground5 of Level1
     Gameobject* _ground6 = new Gameobject(); ///< @brief The _ground6 of Level1
     Gameobject* _ground7 = new Gameobject(); ///< @brief The _ground7 of Level1
+    Gameobject* _ground8 = new Gameobject(); ///< @brief The _ground8 of Level1
     
     Gameobject* _spike1 = new Gameobject(); ///< @brief The _spike1 of Level1
     Gameobject* _spike2 = new Gameobject(); ///< @brief The _spike2 of Level1

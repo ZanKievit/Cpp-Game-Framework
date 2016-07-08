@@ -47,9 +47,9 @@ void Level2::Update()
 {
     _player->setWindow(_window);
     _player->move();
-    if(_player->IsCollidingWith(_ground) || _player->IsCollidingWith(_ground2) || _player->IsCollidingWith(_ground3) ||
-       _player->IsCollidingWith(_ground4) || _player->IsCollidingWith(_ground5) || _player->IsCollidingWith(_ground6) ||
-       _player->IsCollidingWith(_ground7)){
+    if(_player->IsGroundedOn(_ground) || _player->IsGroundedOn(_ground2) || _player->IsGroundedOn(_ground3) ||
+       _player->IsGroundedOn(_ground4) || _player->IsGroundedOn(_ground5) || _player->IsGroundedOn(_ground6)||
+       _player->IsGroundedOn(_ground7)){
         _player->isOnGround();
     }else{
         _player->isOffGround();

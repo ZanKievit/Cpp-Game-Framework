@@ -94,9 +94,15 @@ public:
     /// @param value The new value of _worldPosY
     void setWorldPosY(float value){_worldPosY = value;};
     
-    /// @brief check if this Gameobject is colliding with object.
+    /// @brief check if this Gameobject is colliding with the left side of object.
     /// @param object The Gameobject you want to check collision with
-    bool IsCollidingWith(Gameobject* object);
+    bool IsCollidingLeftSide(Gameobject* object);
+    /// @brief check if this Gameobject is colliding with the right side of object.
+    /// @param object The Gameobject you want to check collision with
+    bool IsCollidingRightSide(Gameobject* object);
+    /// @brief check if this Gameobject is colliding with the top of object.
+    /// @param object The Gameobject you want to check collision with
+    bool IsGroundedOn(Gameobject* object);
     
 private:
     // identity

@@ -13,19 +13,37 @@ void Level1::Update()
 {
     _player->setWindow(_window);
     _player->move();
-    if(_player->IsCollidingWith(_ground) || _player->IsCollidingWith(_ground2) || _player->IsCollidingWith(_ground3) ||
-       _player->IsCollidingWith(_ground4) || _player->IsCollidingWith(_ground5) || _player->IsCollidingWith(_ground6) ||
-       _player->IsCollidingWith(_ground7)){
+    
+    if(_player->IsGroundedOn(_ground) || _player->IsGroundedOn(_ground2) || _player->IsGroundedOn(_ground3) ||
+       _player->IsGroundedOn(_ground4) || _player->IsGroundedOn(_ground5) || _player->IsGroundedOn(_ground6) ||
+       _player->IsGroundedOn(_ground7) || _player->IsGroundedOn(_ground8)){
         _player->isOnGround();
     }else{
         _player->isOffGround();
     }
     
-    if(_player->IsCollidingWith(_spike1) || _player->IsCollidingWith(_spike2)){
+    if(_player->IsCollidingLeftSide(_ground) || _player->IsCollidingLeftSide(_ground2) || _player->IsCollidingLeftSide(_ground3) ||
+    _player->IsCollidingLeftSide(_ground4) || _player->IsCollidingLeftSide(_ground5) || _player->IsCollidingLeftSide(_ground6) ||
+    _player->IsCollidingLeftSide(_ground7) || _player->IsCollidingLeftSide(_ground8)){
+        _player->isColLeft();
+    }else{
+        _player->isNotColLeft();
+    }
+    
+    if(_player->IsCollidingRightSide(_ground) || _player->IsCollidingRightSide(_ground2) || _player->IsCollidingRightSide(_ground3) ||
+       _player->IsCollidingRightSide(_ground4) || _player->IsCollidingRightSide(_ground5) || _player->IsCollidingRightSide(_ground6) ||
+       _player->IsCollidingRightSide(_ground7) || _player->IsCollidingRightSide(_ground8)){
+        _player->isColRight();
+    }else{
+        _player->isNotColRight();
+    }
+     
+    
+    if(_player->IsGroundedOn(_spike1) || _player->IsGroundedOn(_spike2)){
         reset();
     }
     
-    if(_player->IsCollidingWith(end)){
+    if(_player->IsGroundedOn(end) || _player->IsCollidingLeftSide(end) || _player->IsCollidingRightSide(end)){
         this->stopRunning();
     }
 }
@@ -43,6 +61,7 @@ void Level1::start(){
     _ground5->addSprite(groundSprite);
     _ground6->addSprite(groundSprite);
     _ground7->addSprite(groundSprite);
+    _ground8->addSprite(groundSprite);
     _spike1->addSprite(spikeSprite);
     _spike2->addSprite(spikeSprite);
     end->addSprite(endSprite);
@@ -55,6 +74,7 @@ void Level1::start(){
     this->addChild(_ground5);
     this->addChild(_ground6);
     this->addChild(_ground7);
+    this->addChild(_ground8);
     this->addChild(_spike1);
     this->addChild(_spike2);
     this->addChild(end);
@@ -69,6 +89,8 @@ void Level1::start(){
     _ground3->posy = 650;
     _ground4->posx = 484;
     _ground4->posy = 650;
+    _ground8->posx = 484;
+    _ground8->posy = 522;
     _ground5->posx = 612;
     _ground5->posy = 650;
     _ground6->posx = 740;

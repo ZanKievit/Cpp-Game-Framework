@@ -59,22 +59,56 @@ void Gameobject::addSprite(Sprite* spr)
     *_sprite = *spr;
 }
 
-bool Gameobject:: IsCollidingWith(Gameobject* object){
-    float TopLeft = posx - (_sprite->getWidth()/2*scalex) + (_sprite->getHeight()/2*scaley);
-    float Bottomright = posy + (_sprite->getWidth()/2*scalex) - (_sprite->getHeight()/2*scaley);
+bool Gameobject:: IsCollidingLeftSide(Gameobject* object){
+    float TopLeft = posx - (_sprite->getWidth()/2) + (_sprite->getHeight()/2);
+    float Bottomright = posy + (_sprite->getWidth()/2) - (_sprite->getHeight()/2);
+    float TopLeft2 =  object->posx - (object->_sprite->getWidth()/2) + (object->_sprite->getHeight()/2);
+    float Bottomright2 = object->posy + (object->_sprite->getWidth()/2) - (object->_sprite->getHeight()/2);
     
-    float TopLeft2 =  object->posx - (object->_sprite->getWidth()/2*object->scalex) + (object->_sprite->getHeight()/2*object->scaley);
-    float Bottomright2 = object->posy + (object->_sprite->getWidth()/2*object->scalex) - (object->_sprite->getHeight()/2*object->scaley);
-    
-    
-    if((TopLeft >= TopLeft2 && TopLeft <= (TopLeft2 + object->_sprite->getWidth())) ||
-       ((TopLeft + _sprite->getWidth()) >= TopLeft2 &&
-        (TopLeft + _sprite->getWidth()) <= (TopLeft2 + object->_sprite->getWidth()))){
-           if((Bottomright >= Bottomright2 && Bottomright <= (Bottomright2 + object->_sprite->getHeight())) ||
-              ((Bottomright + _sprite->getHeight()) >= Bottomright2 &&
-               (Bottomright + _sprite->getHeight()) <= (Bottomright2 + object->_sprite->getHeight()))){
+    if(((TopLeft + _sprite->getWidth()) >= TopLeft2 &&(TopLeft + _sprite->getWidth()) <= (TopLeft2 + object->_sprite->getWidth()))){
+           if((Bottomright >= Bottomright2 && Bottomright <= (Bottomright2 + object->_sprite->getHeight()))){
                   return true;
-            }
+              }
        }
     return false;
 }
+
+bool Gameobject:: IsCollidingRightSide(Gameobject* object){
+    float TopLeft = posx - (_sprite->getWidth()/2) + (_sprite->getHeight()/2);
+    float Bottomright = posy + (_sprite->getWidth()/2) - (_sprite->getHeight()/2);
+    float TopLeft2 =  object->posx - (object->_sprite->getWidth()/2) + (object->_sprite->getHeight()/2);
+    float Bottomright2 = object->posy + (object->_sprite->getWidth()/2) - (object->_sprite->getHeight()/2);
+    
+    if((TopLeft >= TopLeft2 && TopLeft <= (TopLeft2 + object->_sprite->getWidth()))){
+           if((Bottomright >= Bottomright2 && Bottomright <= (Bottomright2 + object->_sprite->getHeight()))){
+               return true;
+           }
+       }
+    return false;
+}
+
+bool Gameobject:: IsGroundedOn(Gameobject* object){
+    float TopLeft = posx - (_sprite->getWidth()/2) + (_sprite->getHeight()/2);
+    float Bottomright = posy + (_sprite->getWidth()/2) - (_sprite->getHeight()/2);
+    float TopLeft2 =  object->posx - (object->_sprite->getWidth()/2) + (object->_sprite->getHeight()/2);
+    float Bottomright2 = object->posy + (object->_sprite->getWidth()/2) - (object->_sprite->getHeight()/2);
+    
+    if((TopLeft >= TopLeft2 && TopLeft <= (TopLeft2 + object->_sprite->getWidth())) ||
+       ((TopLeft + _sprite->getWidth()) >= TopLeft2 && (TopLeft + _sprite->getWidth()) <= (TopLeft2 + object->_sprite->getWidth()))){
+        if(((Bottomright + _sprite->getHeight()) >= Bottomright2)){
+                  return true;
+        }
+    }
+    return false;
+}
+
+/*
+ if((TopLeft >= TopLeft2 && TopLeft <= (TopLeft2 + object->_sprite->getWidth())) ||
+    ((TopLeft + _sprite->getWidth()) >= TopLeft2 &&
+    (TopLeft + _sprite->getWidth()) <= (TopLeft2 + object->_sprite->getWidth()))){
+    if((Bottomright >= Bottomright2 && Bottomright <= (Bottomright2 + object->_sprite->getHeight())) || ((Bottomright + _sprite->getHeight()) >= Bottomright2 &&
+        (Bottomright + _sprite->getHeight()) <= (Bottomright2 + object->_sprite->getHeight()))){
+        return true;
+    }
+ }
+ */
