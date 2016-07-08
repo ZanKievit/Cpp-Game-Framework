@@ -1,7 +1,7 @@
 #include "level2.h"
 
 Level2::Level2(){
-    playerSprite->setSprite(128, 128, "assets/island.bmp");
+    playerSprite->setSprite(128, 128, "assets/player.bmp");
     groundSprite->setSprite(128, 128, "assets/ground.bmp");
     _player->addSprite(playerSprite);
     _ground->addSprite(groundSprite);

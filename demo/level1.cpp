@@ -49,9 +49,9 @@ void Level1::Update()
 }
 
 void Level1::start(){
-    playerSprite->setSprite(128, 128, "assets/island.bmp");
+    playerSprite->setSprite(128, 128, "assets/player.bmp");
     groundSprite->setSprite(128, 128, "assets/ground.bmp");
-    spikeSprite->setSprite(128, 64, "assets/spikes_small.bmp");
+    spikeSprite->setSprite(128, 64, "assets/spike.bmp");
     endSprite->setSprite(128, 128, "assets/end.bmp");
     _player->addSprite(playerSprite);
     _ground->addSprite(groundSprite);
