@@ -47,7 +47,7 @@ public:
     void stopRunning(){_isRunning = false;}
     
 private:
-    Camera* _camera = new Camera(); ///< @brief the Camera instance
+    Camera* _camera; ///< @brief the Camera instance
     
     bool _isRunning = false; ///< @brief is running or not
 };
