@@ -1,6 +1,18 @@
 #include "level2.h"
 
 Level2::Level2(){
+    playerSprite = new Sprite();
+    groundSprite = new Sprite();
+    _player = new Player();
+    
+    _ground = new Gameobject();
+    _ground2 = new Gameobject();
+    _ground3 = new Gameobject();
+    _ground4 = new Gameobject();
+    _ground5 = new Gameobject();
+    _ground6 = new Gameobject();
+    _ground7 = new Gameobject();
+    
     playerSprite->setSprite(128, 128, "assets/player.bmp");
     groundSprite->setSprite(128, 128, "assets/ground.bmp");
     _player->addSprite(playerSprite);

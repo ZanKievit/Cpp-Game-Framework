@@ -31,17 +31,17 @@ public:
 protected:
     
 private:
-    Sprite* playerSprite = new Sprite(); ///< @brief The Sprite of the Player
-    Sprite* groundSprite = new Sprite(); ///< @brief The Sprite of ground
-    Player* _player = new Player(); ///< @brief The _player of Level2
+    Sprite* playerSprite; ///< @brief The Sprite of the Player
+    Sprite* groundSprite; ///< @brief The Sprite of ground
+    Player* _player; ///< @brief The _player of Level2
     
-    Gameobject* _ground = new Gameobject(); ///< @brief The _ground of Level2
-    Gameobject* _ground2 = new Gameobject(); ///< @brief The _ground2 of Level2
-    Gameobject* _ground3 = new Gameobject(); ///< @brief The _ground3 of Level2
-    Gameobject* _ground4 = new Gameobject(); ///< @brief The _ground4 of Level2
-    Gameobject* _ground5 = new Gameobject(); ///< @brief The _ground5 of Level2
-    Gameobject* _ground6 = new Gameobject(); ///< @brief The _ground6 of Level2
-    Gameobject* _ground7 = new Gameobject(); ///< @brief The _ground7 of Level2
+    Gameobject* _ground; ///< @brief The _ground of Level2
+    Gameobject* _ground2; ///< @brief The _ground2 of Level2
+    Gameobject* _ground3; ///< @brief The _ground3 of Level2
+    Gameobject* _ground4; ///< @brief The _ground4 of Level2
+    Gameobject* _ground5; ///< @brief The _ground5 of Level2
+    Gameobject* _ground6; ///< @brief The _ground6 of Level2
+    Gameobject* _ground7; ///< @brief The _ground7 of Level2
     
     GLFWwindow* _window; ///< @brief The GLFWwindow of the Level2
 };

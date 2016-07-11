@@ -49,10 +49,28 @@ void Level1::Update()
 }
 
 void Level1::start(){
+    playerSprite = new Sprite();
+    groundSprite = new Sprite();
+    spikeSprite = new Sprite();
+    endSprite = new Sprite();
+    _player = new Player();
+    _ground = new Gameobject();
+    _ground2 = new Gameobject();
+    _ground3 = new Gameobject();
+    _ground4 = new Gameobject();
+    _ground5 = new Gameobject();
+    _ground6 = new Gameobject();
+    _ground7 = new Gameobject();
+    _ground8 = new Gameobject();
+    _spike1 = new Gameobject();
+    _spike2 = new Gameobject();
+    end = new Gameobject();
+    
     playerSprite->setSprite(128, 128, "assets/player.bmp");
     groundSprite->setSprite(128, 128, "assets/ground.bmp");
     spikeSprite->setSprite(128, 64, "assets/spike.bmp");
     endSprite->setSprite(128, 128, "assets/end.bmp");
+    
     _player->addSprite(playerSprite);
     _ground->addSprite(groundSprite);
     _ground2->addSprite(groundSprite);
